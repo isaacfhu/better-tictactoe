@@ -1,5 +1,9 @@
 * {
   box-sizing: border-box;
+  color: white;
+}
+body {
+  background-color: rgb(174, 235, 205);
 }
 
 .page {
@@ -25,20 +29,28 @@
 .bottom-div {
   min-width: 500px;
   min-height: 100px;
-  height: 10px;
 
   border: 2.5px solid red;
 }
-.top-div {
-  background-color: black;
+.top-div,
+.middle-div {
+  background-color: rgb(138, 222, 186);
   border-radius: 12px;
+  border: 2.5px solid rgb(114, 181, 150);
+}
+
+.middle-div {
+  min-width: 500px;
+  aspect-ratio: 1;
+
+  padding: 15px;
 }
 
 .game-div {
-  min-width: 500px;
+  width: 100%;
   aspect-ratio: 1;
   border-radius: 12px;
 
-  border: 2.5px solid red;
-  background-color: black;
+  background-color: rgb(10, 60, 43);
+  border: 4px solid rgb(52, 81, 73);
 }
