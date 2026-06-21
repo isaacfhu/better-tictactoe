@@ -1,12 +1,44 @@
-body {
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+
+  padding: 25px;
+  gap: 25px;
+}
+.how-div {
+  flex: 1;
+  border: 2.5px solid red;
+}
+.main {
+  flex: 3;
+  border: 2.5px dotted red;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  gap: 10px;
 }
 
-div {
-  width: 10px;
+.top-div,
+.bottom-div {
+  min-width: 500px;
+  min-height: 100px;
   height: 10px;
+
+  border: 2.5px solid red;
+}
+.top-div {
+  background-color: black;
+  border-radius: 12px;
+}
+
+.game-div {
+  min-width: 500px;
+  aspect-ratio: 1;
+  border-radius: 12px;
+
+  border: 2.5px solid red;
   background-color: black;
 }
