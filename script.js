@@ -2,6 +2,7 @@ const boxes = document.querySelectorAll(".box");
 const resetBtn = document.querySelector(".reset");
 const scoreXdisplay = document.querySelector(".score-x");
 const scoreOdisplay = document.querySelector(".score-o");
+const turnTxt = document.querySelector(".turn-text");
 const debugtxt = document.querySelector(".debug-text");
 const winningCombinations = [
   // Rows
@@ -33,6 +34,10 @@ function reset() {
   X_PROPERTIES = [];
   tic = "X";
 }
+function displayWhosTurn(str) {
+  turnTxt.textContent = `${str}'s Turn`;
+}
+
 function debugVisualize() {
   boxes.forEach((box) => {
     box.textContent = box.id;
@@ -60,6 +65,7 @@ function handleWin(who) {
   } else console.error(`${ticWinner} is NEITHER "O" NOR "X`);
 }
 
+displayWhosTurn(tic);
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     if (box.textContent !== "") return;
@@ -72,7 +78,7 @@ boxes.forEach((box) => {
       tic = "X";
       O_PROPERTIES.push(Number(box.id));
     }
-
+    displayWhosTurn(tic);
     debugtxt.textContent = `
     O: ${O_PROPERTIES}
     X: ${X_PROPERTIES}
