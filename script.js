@@ -1,5 +1,8 @@
 const boxes = document.querySelectorAll(".box");
 const resetBtn = document.querySelector(".reset");
+const scoreX = document.querySelector(".score-x");
+const scoreO = document.querySelector(".score-o");
+const debugtxt = document.querySelector(".debug-text");
 const winningCombinations = [
   // Rows
   [1, 2, 3, 4],
@@ -15,25 +18,58 @@ const winningCombinations = [
   [1, 6, 11, 16],
   [4, 7, 10, 13],
 ];
-let tic = "X";
+let X_PROPERTIES = [];
+let O_PROPERTIES = [];
 
+let tic = "X";
+function reset() {
+  boxes.forEach((box) => {
+    box.textContent = "";
+  });
+  O_PROPERTIES = [];
+  X_PROPERTIES = [];
+  tic = "X";
+}
 function debugVisualize() {
   boxes.forEach((box) => {
     box.textContent = box.id;
   });
+}
+function checkWin() {
+  for (let combination of winningCombinations) {
+    let xWin = combination.every((id) => X_PROPERTIES.includes(id));
+    let oWin = combination.every((id) => O_PROPERTIES.includes(id));
+
+    if (xWin === true) return { winner: true, who: "X" };
+    if (oWin === true) return { winner: true, who: "O" };
+  }
+  return { winner: false, who: null };
 }
 
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     if (box.textContent !== "") return;
     box.textContent = tic;
-    if (tic === "X") tic = "O";
-    else tic = "X";
+
+    if (tic === "X") {
+      X_PROPERTIES.push(box.id);
+      tic = "O";
+    } else {
+      tic = "X";
+      O_PROPERTIES.push(box.id);
+    }
+
+    debugtxt.textContent = `
+    O: ${O_PROPERTIES}
+    X: ${X_PROPERTIES}
+    `;
+
+    let winner,
+      ticWinner = checkWin();
+
+    if (winner) {
+    }
   });
 });
 
-resetBtn.addEventListener("click", () => {
-  boxes.forEach((box) => (box.textContent = ""));
-});
-
-debugVisualize();
+resetBtn.addEventListener("click", reset);
