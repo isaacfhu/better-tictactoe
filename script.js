@@ -1,7 +1,7 @@
 const boxes = document.querySelectorAll(".box");
 const resetBtn = document.querySelector(".reset");
-const scoreX = document.querySelector(".score-x");
-const scoreO = document.querySelector(".score-o");
+const scoreXdisplay = document.querySelector(".score-x");
+const scoreOdisplay = document.querySelector(".score-o");
 const debugtxt = document.querySelector(".debug-text");
 const winningCombinations = [
   // Rows
@@ -18,6 +18,9 @@ const winningCombinations = [
   [1, 6, 11, 16],
   [4, 7, 10, 13],
 ];
+let scoreX = 0;
+let scoreO = 0;
+
 let X_PROPERTIES = [];
 let O_PROPERTIES = [];
 
@@ -45,6 +48,17 @@ function checkWin() {
   }
   return { winner: false, who: null };
 }
+function handleWin(who) {
+  if (who === "O") {
+    scoreO += 1;
+    scoreOdisplay.textContent = `O: ${scoreO}`;
+    reset();
+  } else if (who === "X") {
+    scoreX += 1;
+    scoreXdisplay.textContent = `X: ${scoreX}`;
+    reset();
+  } else console.error(`${ticWinner} is NEITHER "O" NOR "X`);
+}
 
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
@@ -52,11 +66,11 @@ boxes.forEach((box) => {
     box.textContent = tic;
 
     if (tic === "X") {
-      X_PROPERTIES.push(box.id);
+      X_PROPERTIES.push(Number(box.id));
       tic = "O";
     } else {
       tic = "X";
-      O_PROPERTIES.push(box.id);
+      O_PROPERTIES.push(Number(box.id));
     }
 
     debugtxt.textContent = `
@@ -64,11 +78,9 @@ boxes.forEach((box) => {
     X: ${X_PROPERTIES}
     `;
 
-    let winner,
-      ticWinner = checkWin();
+    let { winner, who } = checkWin();
 
-    if (winner) {
-    }
+    if (winner) handleWin(who);
   });
 });
 

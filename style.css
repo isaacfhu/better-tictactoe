@@ -75,7 +75,7 @@ body {
 .box {
   background-color: rgb(65, 148, 128);
   border-radius: 12px;
-  font-size: 10px;
+  font-size: 30px;
 }
 
 .scores {
