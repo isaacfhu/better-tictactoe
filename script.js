@@ -29,13 +29,24 @@ let tic = "X";
 function reset() {
   boxes.forEach((box) => {
     box.textContent = "";
+    box.classList.remove("red", "blue");
   });
   O_PROPERTIES = [];
   X_PROPERTIES = [];
   tic = "X";
 }
 function displayWhosTurn(str) {
-  turnTxt.textContent = `${str}'s Turn`;
+  turnTxt.textContent = str;
+  if (str === "O") {
+    turnTxt.classList.remove("red");
+    turnTxt.classList.add("blue");
+  } else if (str === "X") {
+    turnTxt.classList.remove("blue");
+    turnTxt.classList.add("red");
+  } else {
+    turnTxt.classList.remove("blue", "red");
+    turnTxt.classList.add("white");
+  }
 }
 
 function debugVisualize() {
@@ -56,11 +67,11 @@ function checkWin() {
 function handleWin(who) {
   if (who === "O") {
     scoreO += 1;
-    scoreOdisplay.textContent = `O: ${scoreO}`;
+    scoreOdisplay.textContent = scoreO;
     reset();
   } else if (who === "X") {
     scoreX += 1;
-    scoreXdisplay.textContent = `X: ${scoreX}`;
+    scoreXdisplay.textContent = scoreX;
     reset();
   } else console.error(`${ticWinner} is NEITHER "O" NOR "X`);
 }
@@ -72,9 +83,13 @@ boxes.forEach((box) => {
     box.textContent = tic;
 
     if (tic === "X") {
+      box.classList.add("red");
+
       X_PROPERTIES.push(Number(box.id));
       tic = "O";
     } else {
+      box.classList.add("blue");
+
       tic = "X";
       O_PROPERTIES.push(Number(box.id));
     }
