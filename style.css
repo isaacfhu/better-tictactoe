@@ -24,12 +24,14 @@ body {
 .page {
   display: flex;
   justify-content: center;
+  align-items: center;
 
   padding: 25px;
   gap: 25px;
 }
 .how-div {
   flex: 1;
+  padding: 10px;
   display: flex;
   flex-flow: column wrap;
 }
