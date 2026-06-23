@@ -31,12 +31,17 @@ let O_PROPERTIES = [];
 let tic = "X";
 function reset() {
   boxes.forEach((box) => {
-    box.querySelector("span").textContent = "";
-    box.classList.remove("red", "blue");
+    const span = box.querySelector("span");
+    span.textContent = "";
+    span.style.opacity = 1;
+    span.classList.remove("red", "blue");
   });
+
   O_PROPERTIES = [];
   X_PROPERTIES = [];
+  currentTurn = 0;
   tic = "X";
+  displayWhosTurn(tic);
 }
 
 function displayWhosTurn(str) {
@@ -94,7 +99,7 @@ function handleWin(who) {
     scoreX += 1;
     scoreXdisplay.textContent = scoreX;
     reset();
-  } else console.error(`${ticWinner} is NEITHER "O" NOR "X`);
+  } else console.error(`${who} is NEITHER "O" NOR "X`);
 }
 
 displayWhosTurn(tic);
