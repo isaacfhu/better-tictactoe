@@ -101,8 +101,8 @@ boxes.forEach((box) => {
     }
     displayWhosTurn(tic);
     debugtxt.textContent = `
-    O: ${O_PROPERTIES}
-    X: ${X_PROPERTIES}
+    O: ${O_PROPERTIES.map((obj) => obj.id)}
+    X: ${X_PROPERTIES.map((obj) => obj.id)}
     turn: ${turnCounter}
     `;
     turnCounter += 1;
