@@ -31,7 +31,7 @@ let O_PROPERTIES = [];
 let tic = "X";
 function reset() {
   boxes.forEach((box) => {
-    box.textContent = "";
+    box.querySelector("span").textContent = "";
     box.classList.remove("red", "blue");
   });
   O_PROPERTIES = [];
@@ -54,9 +54,11 @@ function displayWhosTurn(str) {
 }
 function fadeOutPerTurn(arr) {
   arr.forEach((obj) => {
-    let turnAge = (currentTurn - obj.turn) / turnsToFadeout;
-    document.getElementById(obj.id).style.text = 1 - turnAge;
-    if (turnAge <= 0) {
+    let turnAge = (currentTurn - obj.turn) / (turnsToFadeout * 2 - 1);
+    let objText = document.getElementById(obj.id).querySelector("span");
+    objText.style.opacity = 1 - turnAge;
+    if (turnAge >= 1) {
+      objText.textContent = "reached 0";
       // tic in that box becomes ""
       // opacity goes to 1
       // tic goes out of TIC_PROPERTIES
@@ -66,7 +68,7 @@ function fadeOutPerTurn(arr) {
 }
 function debugVisualize() {
   boxes.forEach((box) => {
-    box.textContent = box.id;
+    box.querySelector("span").textContent = box.id;
   });
 }
 function checkWin() {
@@ -97,19 +99,20 @@ function handleWin(who) {
 
 displayWhosTurn(tic);
 boxes.forEach((box) => {
+  const boxText = box.querySelector("span");
   box.addEventListener("click", () => {
-    if (box.textContent !== "") return;
-    box.textContent = tic;
+    if (boxText.textContent !== "") return;
+    boxText.textContent = tic;
 
     fadeOutPerTurn(O_PROPERTIES);
     fadeOutPerTurn(X_PROPERTIES);
     if (tic === "X") {
-      box.classList.add("red");
+      boxText.classList.add("red");
 
       X_PROPERTIES.push({ id: Number(box.id), turn: currentTurn });
       tic = "O";
     } else {
-      box.classList.add("blue");
+      boxText.classList.add("blue");
 
       tic = "X";
       O_PROPERTIES.push({ id: Number(box.id), turn: currentTurn });
