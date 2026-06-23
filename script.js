@@ -19,7 +19,9 @@ const winningCombinations = [
   [1, 6, 11, 16],
   [4, 7, 10, 13],
 ];
-let turnCounter = 0;
+const turnsToFadeout = 3;
+
+let currentTurn = 0;
 let scoreX = 0;
 let scoreO = 0;
 
@@ -50,7 +52,18 @@ function displayWhosTurn(str) {
     turnTxt.classList.add("white");
   }
 }
-
+function fadeOutPerTurn(arr) {
+  arr.forEach((obj) => {
+    let turnAge = (currentTurn - obj.turn) / turnsToFadeout;
+    document.getElementById(obj.id).style.text = 1 - turnAge;
+    if (turnAge <= 0) {
+      // tic in that box becomes ""
+      // opacity goes to 1
+      // tic goes out of TIC_PROPERTIES
+    }
+    console.log(turnAge);
+  });
+}
 function debugVisualize() {
   boxes.forEach((box) => {
     box.textContent = box.id;
@@ -88,24 +101,26 @@ boxes.forEach((box) => {
     if (box.textContent !== "") return;
     box.textContent = tic;
 
+    fadeOutPerTurn(O_PROPERTIES);
+    fadeOutPerTurn(X_PROPERTIES);
     if (tic === "X") {
       box.classList.add("red");
 
-      X_PROPERTIES.push({ id: Number(box.id), turn: turnCounter });
+      X_PROPERTIES.push({ id: Number(box.id), turn: currentTurn });
       tic = "O";
     } else {
       box.classList.add("blue");
 
       tic = "X";
-      O_PROPERTIES.push({ id: Number(box.id), turn: turnCounter });
+      O_PROPERTIES.push({ id: Number(box.id), turn: currentTurn });
     }
     displayWhosTurn(tic);
     debugtxt.textContent = `
     O: ${O_PROPERTIES.map((obj) => obj.id)}
     X: ${X_PROPERTIES.map((obj) => obj.id)}
-    turn: ${turnCounter}
+    turn: ${currentTurn}
     `;
-    turnCounter += 1;
+    currentTurn += 1;
     let { winner, who } = checkWin();
 
     if (winner) handleWin(who);
