@@ -19,7 +19,7 @@ const winningCombinations = [
   [1, 6, 11, 16],
   [4, 7, 10, 13],
 ];
-const turnsToFadeout = 3;
+const turnsToFadeout = 10;
 
 let currentTurn = 0;
 let scoreX = 0;
@@ -59,14 +59,14 @@ function displayWhosTurn(str) {
 }
 function fadeOutPerTurn(arr) {
   arr.forEach((obj) => {
-    let turnAge = (currentTurn - obj.turn) / (turnsToFadeout * 2 - 1);
+    let turnAge = (currentTurn - obj.turn) / turnsToFadeout;
     let objText = document.getElementById(obj.id).querySelector("span");
     objText.style.opacity = 1 - turnAge;
     if (turnAge >= 1) {
-      objText.textContent = "reached 0";
-      // tic in that box becomes ""
-      // opacity goes to 1
-      // tic goes out of TIC_PROPERTIES
+      arr.splice(arr.indexOf(obj), 1);
+      objText.textContent = "";
+      objText.style.opacity = 1;
+      objText.classList.remove("red", "blue");
     }
     console.log(turnAge);
   });
