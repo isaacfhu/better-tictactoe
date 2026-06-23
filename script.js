@@ -19,6 +19,7 @@ const winningCombinations = [
   [1, 6, 11, 16],
   [4, 7, 10, 13],
 ];
+let turnCounter = 0;
 let scoreX = 0;
 let scoreO = 0;
 
@@ -35,6 +36,7 @@ function reset() {
   X_PROPERTIES = [];
   tic = "X";
 }
+
 function displayWhosTurn(str) {
   turnTxt.textContent = str;
   if (str === "O") {
@@ -56,8 +58,12 @@ function debugVisualize() {
 }
 function checkWin() {
   for (let combination of winningCombinations) {
-    let xWin = combination.every((id) => X_PROPERTIES.includes(id));
-    let oWin = combination.every((id) => O_PROPERTIES.includes(id));
+    let xWin = combination.every((id) =>
+      X_PROPERTIES.some((arr) => arr.id === id),
+    );
+    let oWin = combination.every((id) =>
+      O_PROPERTIES.some((arr) => arr.id === id),
+    );
 
     if (xWin === true) return { winner: true, who: "X" };
     if (oWin === true) return { winner: true, who: "O" };
@@ -85,20 +91,21 @@ boxes.forEach((box) => {
     if (tic === "X") {
       box.classList.add("red");
 
-      X_PROPERTIES.push(Number(box.id));
+      X_PROPERTIES.push({ id: Number(box.id), turn: turnCounter });
       tic = "O";
     } else {
       box.classList.add("blue");
 
       tic = "X";
-      O_PROPERTIES.push(Number(box.id));
+      O_PROPERTIES.push({ id: Number(box.id), turn: turnCounter });
     }
     displayWhosTurn(tic);
     debugtxt.textContent = `
     O: ${O_PROPERTIES}
     X: ${X_PROPERTIES}
+    turn: ${turnCounter}
     `;
-
+    turnCounter += 1;
     let { winner, who } = checkWin();
 
     if (winner) handleWin(who);
