@@ -61,7 +61,7 @@ function fadeOutPerTurn(arr) {
   arr.forEach((obj) => {
     let turnAge = (currentTurn - obj.turn) / turnsToFadeout;
     let objText = document.getElementById(obj.id).querySelector("span");
-    objText.style.opacity = 1 - turnAge;
+    objText.style.opacity = Math.max(0.5, 1 - turnAge);
     if (turnAge >= 1) {
       arr.splice(arr.indexOf(obj), 1);
       objText.textContent = "";
